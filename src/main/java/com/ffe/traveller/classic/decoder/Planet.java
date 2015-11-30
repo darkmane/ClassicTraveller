@@ -5,13 +5,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Null;
 import java.util.*;
 
 /**
  * @author markknights
  */
-
+@Entity
 public class Planet {
     final static String PREFIX = "PSR ";
 

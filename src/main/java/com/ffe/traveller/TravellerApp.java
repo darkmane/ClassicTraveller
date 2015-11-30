@@ -1,9 +1,5 @@
 package com.ffe.traveller;
 
-
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
@@ -16,7 +12,6 @@ import java.util.Properties;
  */
 public class TravellerApp extends ResourceConfig {
 
-    private static Client client = null;
     private static Properties properties = null;
 
     static {
@@ -37,17 +32,6 @@ public class TravellerApp extends ResourceConfig {
 //        register(BaseExceptionMapper.class);
     }
 
-    public static Client ElasticSearchClient() {
-        if (client == null) {
-            TransportClient cl = new TransportClient().addTransportAddress(new InetSocketTransportAddress(
-                    properties.getProperty("elastic_search.server"),
-                    Integer.parseInt(properties.getProperty("elastic_search.port"))));
-
-            client = cl;
-        }
-
-        return client;
-    }
 
     private static void loadProperties() {
         if (properties == null) {
