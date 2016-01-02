@@ -21,7 +21,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class ClassicTravellerApplet extends JApplet implements ChangeListener, ActionListener {
-	private String[] testPages = {"Planet Decoder", "Classic Trade"}; 
+	private String[] testPages = {"Planet Decoder", "Classic Trade"};
 	private JTabbedPane tabs = new JTabbedPane();
 	private JTextField txt = new JTextField(20);
 	private JTextField name, hex, starport, planSize, planAtmosphere, hydro, pop, planGov, lawLev, techLev;

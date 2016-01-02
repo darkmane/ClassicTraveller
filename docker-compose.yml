@@ -1,26 +1,13 @@
 travellerApp:
   image: tomcat:8.0-jre8
   links:
-    - travellerElasticSearch:elastic-search.darkmane.me
-    - travellerDb:mongo.darkmane.me
+    - travellerDb:db.darkmane.me
 travellerDb:
-  image: mongo:3.1
-  ports:
-    - "27017:27017"
-    - "28017:28017"
-  expose:
-    - "27017"
-    - "28017"
-travellerElasticSearch:
-  image: elasticsearch:1.7
-  ports:
-    - "9200:9200"
-    - "9300:9300"
-  expose:
-    - "9200"
-    - "9300"
-  volumes:
-    - elasticsearch:/data
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=traveller_root
+    - MYSQL_USER=traveller
+    - MYSQL_PASSWORD=traveller
 travellerdebug:
   build: .
   dockerfile: Dockerfile-debug
@@ -30,5 +17,4 @@ travellerdebug:
   volumes:
     - ./target:/code
   links:
-    - travellerElasticSearch:elastic-search.darkmane.me
-    - travellerDb:mongo.darkmane.me
+    - travellerDb:db.darkmane.me

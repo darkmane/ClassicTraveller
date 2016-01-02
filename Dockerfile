@@ -1,2 +1,2 @@
-FROM tomcat:8.0-jre7
+FROM tomcat:8.0-jre8
 MAINTAINER Sean Chitwood <darkmane@gmail.com>

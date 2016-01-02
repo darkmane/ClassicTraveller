@@ -1,4 +1,4 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 public enum TradeClassifications {
 	Agricultural("Agricultural System"),

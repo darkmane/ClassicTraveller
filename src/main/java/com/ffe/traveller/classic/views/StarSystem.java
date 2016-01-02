@@ -1,7 +1,6 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ImmutableSet;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

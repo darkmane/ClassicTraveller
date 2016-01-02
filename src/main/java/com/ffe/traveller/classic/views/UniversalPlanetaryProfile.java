@@ -3,7 +3,7 @@
  *
  * Bringing Traveller into the Applications world!
  */
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,25 +25,31 @@ public class UniversalPlanetaryProfile {
 		public static final Integer SizeS = Integer.MIN_VALUE;
 
 
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer diameter;
-    @Getter
+
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer atmosphere;
-    @Getter
+
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer hydro;
-    @Getter
+
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer population;
-    @Getter
+
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer government;
-    @Getter
+
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer law_level;
-    @Getter
+
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     private Integer technological_level;
 

@@ -5,10 +5,10 @@ import org.testng.*;
 
 import org.testng.annotations.*;
 
-import com.ffe.traveller.classic.decoder.UniversalPlanetaryProfile;
-import com.ffe.traveller.classic.decoder.Starport;
+import com.ffe.traveller.classic.views.UniversalPlanetaryProfile;
+import com.ffe.traveller.classic.views.Starport;
 
-import static com.ffe.traveller.classic.decoder.UniversalPlanetaryProfileMaker.CreateUniversalPlanetaryProfile;
+import static com.ffe.traveller.classic.views.UniversalPlanetaryProfileMaker.CreateUniversalPlanetaryProfile;
 
 public class UPPTests {
 

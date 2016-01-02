@@ -1,4 +1,4 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 
 import javax.validation.constraints.Null;
@@ -6,7 +6,6 @@ import javax.validation.constraints.Null;
 import java.io.InputStream;
 import java.util.*;
 
-import com.ffe.traveller.classic.decoder.StarSystem.Zone.*;
 import org.yaml.snakeyaml.Yaml;
 
 import static com.ffe.traveller.util.DiceGenerator.*;
@@ -447,7 +446,7 @@ public class PlanetMaker {
             orbitRoll = rollDice(rng, 1);
         }
 
-        return orbits.get(orbitRoll);
+        return orbits.get(orbitRoll-1);
 
     }
 

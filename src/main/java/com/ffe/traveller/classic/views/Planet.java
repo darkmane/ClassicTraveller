@@ -1,18 +1,16 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.Null;
 import java.util.*;
 
 /**
  * @author markknights
  */
-@Entity
 public class Planet {
     final static String PREFIX = "PSR ";
 
@@ -35,11 +33,11 @@ public class Planet {
 
     @Getter
     @Setter(AccessLevel.PROTECTED)
-    protected String sector;
+    private String sector;
 
     @Getter
     @Setter(AccessLevel.PROTECTED)
-    protected String subsector;
+    private String subsector;
 
     @Getter
     @Setter(AccessLevel.PROTECTED)
@@ -49,13 +47,18 @@ public class Planet {
     @Setter(AccessLevel.PROTECTED)
     protected int hexLocation;
 
-    @Getter
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     protected UniversalPlanetaryProfile profile;
 
-    protected boolean navalBase;
+    @Getter(AccessLevel.PUBLIC)
+    @Setter(AccessLevel.PROTECTED)
+    protected Boolean navalBase;
 
-    protected boolean scoutBase;
+
+    @Getter()
+    @Setter(AccessLevel.PROTECTED)
+    protected Boolean scoutBase;
 
     protected double getMinimumGreenhouse() {
         double minG = 1.0;
@@ -294,20 +297,5 @@ public class Planet {
         else
             return Type.ROCKY_PLANET;
     }
-
-
-    public boolean getNavalBase() {
-        return navalBase;
-    }
-
-    public void setNavalBase(boolean val){ navalBase = val;}
-
-    public boolean getScoutBase() {
-        return scoutBase;
-    }
-
-
-    public void setScoutBase(boolean val){ scoutBase = val;}
-
 
 }

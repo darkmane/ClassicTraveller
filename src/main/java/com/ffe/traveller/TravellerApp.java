@@ -36,12 +36,10 @@ public class TravellerApp extends ResourceConfig {
     private static void loadProperties() {
         if (properties == null) {
             Map<String, String> envMap = System.getenv();
-            String env = "development";
-            if (envMap.containsKey("ENVIRONMENT"))
-                env = envMap.get("ENVIRONMENT");
+
 
             Properties prop = new Properties();
-            InputStream in = TravellerApp.class.getResourceAsStream("traveller." + env + ".properties");
+            InputStream in = TravellerApp.class.getResourceAsStream("traveller.properties");
 
             try {
                 prop.load(in);

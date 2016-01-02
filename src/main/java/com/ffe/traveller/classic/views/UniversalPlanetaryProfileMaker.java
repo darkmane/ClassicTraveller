@@ -3,7 +3,7 @@
  *
  * Bringing Traveller into the Applications world!
  */
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import com.ffe.traveller.util.DiceGenerator;
 

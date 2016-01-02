@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 /**
  * @author darkmane

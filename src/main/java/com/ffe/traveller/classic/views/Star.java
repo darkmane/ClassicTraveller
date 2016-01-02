@@ -1,4 +1,4 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -147,8 +147,8 @@ public class Star {
         Map<String, Object> tables =
                 (Map<String, Object>) orbitalInfo.get("zones");
 
-        Map<String, Object> sizeTable = (Map<String, Object>) tables.get(this.getStarSize().toString());
-        Map<String, Object> classTable = (Map<String, Object>) sizeTable.get(this.getStellarClass().toString() + "0");
+        Map<String, Object> sizeTable = (Map<String, Object>) tables.get(this.starSize.toString());
+        Map<String, Object> classTable = (Map<String, Object>) sizeTable.get(this.stellarClass.toString() + "0");
         List<Integer> zones = (List<Integer>) classTable.get(z.toString().toLowerCase());
 
 

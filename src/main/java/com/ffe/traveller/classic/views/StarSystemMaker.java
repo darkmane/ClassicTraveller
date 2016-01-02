@@ -1,17 +1,17 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import com.ffe.traveller.util.Utility;
 
 import javax.validation.constraints.Null;
 import java.util.*;
 
-import static com.ffe.traveller.classic.decoder.PlanetMaker.CreateGasGiant;
-import static com.ffe.traveller.classic.decoder.PlanetMaker.CreatePlanet;
-import static com.ffe.traveller.classic.decoder.PlanetMaker.CreateMinorPlanet;
-import static com.ffe.traveller.classic.decoder.Star.StellarClass.*;
-import static com.ffe.traveller.classic.decoder.Star.StellarSize.*;
-import static com.ffe.traveller.classic.decoder.Star.StarPosition.*;
-import static com.ffe.traveller.classic.decoder.StarSystem.*;
+import static com.ffe.traveller.classic.views.PlanetMaker.CreateGasGiant;
+import static com.ffe.traveller.classic.views.PlanetMaker.CreatePlanet;
+import static com.ffe.traveller.classic.views.PlanetMaker.CreateMinorPlanet;
+import static com.ffe.traveller.classic.views.Star.StellarClass.*;
+import static com.ffe.traveller.classic.views.Star.StellarSize.*;
+import static com.ffe.traveller.classic.views.Star.StarPosition.*;
+import static com.ffe.traveller.classic.views.StarSystem.*;
 import static com.ffe.traveller.util.DiceGenerator.*;
 
 

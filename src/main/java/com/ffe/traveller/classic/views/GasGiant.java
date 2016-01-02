@@ -1,4 +1,4 @@
-package com.ffe.traveller.classic.decoder;
+package com.ffe.traveller.classic.views;
 
 import javax.validation.constraints.Null;
 
