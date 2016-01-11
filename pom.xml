@@ -24,8 +24,7 @@
     </properties>
 
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-
+        <sourceDirectory>${basedir}</sourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -65,6 +64,9 @@
                     </includes>
                     <source>${project.sourceVersion}</source>
                     <target>${project.sourceVersion}</target>
+                    <testIncludes>
+                        <testInclude>src/test/java/**/*.java</testInclude>
+                    </testIncludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -111,21 +113,6 @@
                             or URLs pointing to directories or jar files. Directories should end with '/' -->
                         <extraClasspath>${project.build.outputDirectory};</extraClasspath>
                     </webApp>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>org.example.HelloWorld</mainClass>
                 </configuration>
             </plugin>
             <plugin>

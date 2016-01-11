@@ -8,6 +8,8 @@ travellerDb:
     - MYSQL_ROOT_PASSWORD=traveller_root
     - MYSQL_USER=traveller
     - MYSQL_PASSWORD=traveller
+  ports:
+    - "3306:3306"
 travellerdebug:
   build: .
   dockerfile: Dockerfile-debug

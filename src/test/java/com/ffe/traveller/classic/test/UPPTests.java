@@ -1,9 +1,7 @@
-package com.ffe.traveller.test;
+package com.ffe.traveller.classic.test;
 
-
-import org.testng.*;
-
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import com.ffe.traveller.classic.views.UniversalPlanetaryProfile;
 import com.ffe.traveller.classic.views.Starport;

@@ -23,12 +23,13 @@ public class WorldController extends HttpServlet {
     @Path("/starsystem")
     @Produces(MediaType.APPLICATION_JSON)
     public List<StarSystem> searchAllWorlds(@PathParam("ruleSet") String rules,
-                                            @QueryParam("region") String sector,
+                                            @QueryParam("region") String region,
                                             @QueryParam("hex") String hex,
                                             @QueryParam("upp") String UPPs) {
 
         Planet p = PlanetMaker.CreatePlanet(null, null, null, null, null, null, null, null, null, null, null, null, null);
         List<StarSystem> list = new ArrayList<>();
+        System.out.println("foo");
         list.add(StarSystemMaker.CreateStarSystem(null, p));
         return list;
 

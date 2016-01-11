@@ -1,6 +1,7 @@
 package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ser.std.StdArraySerializers;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,14 +52,21 @@ public class Planet {
     @Setter(AccessLevel.PROTECTED)
     protected UniversalPlanetaryProfile profile;
 
-    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
     protected Boolean navalBase;
 
-
-    @Getter()
     @Setter(AccessLevel.PROTECTED)
     protected Boolean scoutBase;
+
+    public Boolean getNavalBase(){
+        return (navalBase == null)? false: navalBase;
+    }
+
+    public Boolean getScoutBase(){
+
+        return (scoutBase == null)? false: scoutBase;
+
+    }
 
     protected double getMinimumGreenhouse() {
         double minG = 1.0;

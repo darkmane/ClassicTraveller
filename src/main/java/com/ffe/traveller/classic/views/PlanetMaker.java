@@ -44,16 +44,18 @@ public class PlanetMaker {
         UniversalPlanetaryProfile upp = UniversalPlanetaryProfileMaker.CreateUniversalPlanetaryProfile(starportType,
                 planetSize, planetAtmosphere, hydroPercent, population, planetGovernment, law);
 
-
-        if ((upp.getStarport() == Starport.A || upp.getStarport() == Starport.B)
-                && rollDice(1) % 2 == 0) {
-            navalBase = true;
+        if(navalBase == null) {
+            if ((upp.getStarport() == Starport.A || upp.getStarport() == Starport.B)
+                    && rollDice(1) % 2 == 0) {
+                navalBase = true;
+            }
         }
-
-        if ((upp.getStarport() == Starport.A || upp.getStarport() == Starport.B
-                || upp.getStarport() == Starport.C || upp.getStarport() == Starport.D)
-                && rollDice(1) % 2 == 0) {
-            scoutBase = true;
+        if(scoutBase == null) {
+            if ((upp.getStarport() == Starport.A || upp.getStarport() == Starport.B
+                    || upp.getStarport() == Starport.C || upp.getStarport() == Starport.D)
+                    && rollDice(1) % 2 == 0) {
+                scoutBase = true;
+            }
         }
 
         return new Planet(planetName, hexLocale, upp, navalBase, scoutBase);
