@@ -6,14 +6,13 @@ import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import org.yaml.snakeyaml.Yaml;
 
-import javax.persistence.Entity;
 import java.io.InputStream;
 import java.util.*;
 
 /**
  * Created by sechitwood on 2/9/15.
  */
-@Entity
+
 public class Star {
 
     private static Map<String, Map<String, Double>> luminosityMap = new HashMap<>();

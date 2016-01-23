@@ -20,52 +20,24 @@
         <snake.yaml.version>1.15-SNAPSHOT</snake.yaml.version>
         <ebean.version>2.8.1</ebean.version>
         <mysql.connector.version>5.1.37</mysql.connector.version>
-        <ebean.orm.version>6.11.1</ebean.orm.version>
+        <ebean.orm.version>6.15.2</ebean.orm.version>
     </properties>
 
     <build>
-        <sourceDirectory>${basedir}</sourceDirectory>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.flywaydb</groupId>
-                    <artifactId>flyway-maven-plugin</artifactId>
-                    <version>3.2.1</version>
-                    <configuration>
-                        <url>jdbc:mysql://192.168.99.100/traveller</url>
-                        <user>root</user>
-                        <password>traveller_root</password>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.h2database</groupId>
-                            <artifactId>h2</artifactId>
-                            <version>1.3.170</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.2</version>
                 <configuration>
                     <includes>
-                        <include>src/main/java/**/*.java</include>
+                        <include>**/*.java</include>
                     </includes>
                     <source>${project.sourceVersion}</source>
                     <target>${project.sourceVersion}</target>
                     <testIncludes>
-                        <testInclude>src/test/java/**/*.java</testInclude>
+                        <testInclude>**/*.java</testInclude>
                     </testIncludes>
                 </configuration>
             </plugin>
@@ -121,6 +93,53 @@
                 <version>2.6</version>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <configuration>
+                        <url>jdbc:mysql://192.168.99.100/traveller</url>
+                        <user>root</user>
+                        <password>traveller_root</password>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.h2database</groupId>
+                            <artifactId>h2</artifactId>
+                            <version>1.3.170</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.avaje.ebeanorm</groupId>
+                    <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+                    <version>4.8.1</version>
+                    <executions>
+                        <execution>
+                            <id>main</id>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>enhance</goal>
+                            </goals>
+                            <configuration>
+                                <packages>com.ffe.**</packages>
+                                <transformArgs>debug=1</transformArgs>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <repositories>
         <repository>
@@ -243,15 +262,26 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.avaje</groupId>
-            <artifactId>ebean</artifactId>
-            <version>${ebean.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.avaje.ebeanorm</groupId>
             <artifactId>avaje-ebeanorm</artifactId>
             <version>${ebean.orm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.avaje</groupId>
+            <artifactId>avaje-agentloader</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.avaje.ebeanorm</groupId>
+            <artifactId>avaje-ebeanorm-agent</artifactId>
+            <version>4.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
     </dependencies>
 </project>

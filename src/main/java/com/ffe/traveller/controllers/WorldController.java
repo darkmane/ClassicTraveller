@@ -1,8 +1,10 @@
 package com.ffe.traveller.controllers;
 
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
+import com.ffe.traveller.classic.models.Region;
 import com.ffe.traveller.classic.views.*;
-
 
 import javax.servlet.http.HttpServlet;
 import javax.validation.Valid;
@@ -19,6 +21,7 @@ import java.util.List;
 public class WorldController extends HttpServlet {
 
 
+
     @GET
     @Path("/starsystem")
     @Produces(MediaType.APPLICATION_JSON)
@@ -27,9 +30,14 @@ public class WorldController extends HttpServlet {
                                             @QueryParam("hex") String hex,
                                             @QueryParam("upp") String UPPs) {
 
+        final EbeanServer ebeanServer = Ebean.getServer(null);
+
         Planet p = PlanetMaker.CreatePlanet(null, null, null, null, null, null, null, null, null, null, null, null, null);
         List<StarSystem> list = new ArrayList<>();
-        System.out.println("foo");
+        List<Region> listRegion = new ArrayList<>();
+        if(region != null) {
+            listRegion.addAll(ebeanServer.find(Region.class).where().istartsWith("name", region).findList());
+        }
         list.add(StarSystemMaker.CreateStarSystem(null, p));
         return list;
 
