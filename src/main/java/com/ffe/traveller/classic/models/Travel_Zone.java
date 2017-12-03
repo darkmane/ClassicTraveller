@@ -12,36 +12,15 @@ import javax.persistence.Table;
 /**
  * Created by darkmane on 11/29/15.
  */
+
 @Entity
-@Table(name="regions")
-public class Region extends Model {
+@Table(name="trade_zones")
+public class Travel_Zone extends Model {
     @Id
     Long id;
 
     @Column
     @Getter
     @Setter
-    public int coord_x;
-
-    @Column
-    @Getter
-    @Setter
-    public int coord_y;
-
-    @Column
-    @Getter
-    @Setter
     public String name;
-
-    @Column
-    @Getter
-    @Setter
-    public int vertical_size;
-
-    @Column
-    @Getter
-    @Setter
-    public int horizontal_size;
-
-
 }

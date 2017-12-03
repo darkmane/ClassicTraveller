@@ -27,6 +27,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:1.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial:4.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.spatial4j:spatial4j:0.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.avaje:ebean:2.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.15-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.testng:testng:6.8.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.beanshell:bsh:2.0b4" level="project" />
@@ -64,20 +79,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:0.8.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.web:javax.el:2.2.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: javax.el:javax.el-api:2.2.4" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:1.4.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial:4.10.2" level="project" />
-    <orderEntry type="library" name="Maven: com.spatial4j:spatial4j:0.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.1.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.1.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.1.3" level="project" />
@@ -88,10 +89,14 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:7.2.0.v20101020" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.7" level="project" />
-    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.3.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
-    <orderEntry type="library" name="Maven: org.avaje:ebean:2.7.1" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.37" level="project" />
+    <orderEntry type="library" name="Maven: org.avaje.ebeanorm:avaje-ebeanorm:6.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.avaje:avaje-agentloader:2.1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.avaje.ebeanorm:avaje-ebeanorm-agent:4.8.1" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
   </component>
 </module>

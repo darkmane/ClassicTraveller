@@ -1,8 +1,13 @@
 package com.ffe.traveller.classic.models;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.Model;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Map;
 
 /**
  * Created by darkmane on 11/29/15.
@@ -14,29 +19,54 @@ public class Star_System extends Model {
     Long id;
 
     @Column
-    Long coord_x;
+    @Getter
+    @Setter
+    public Long coord_x;
 
     @Column
-    Long coord_y;
+    @Getter
+    @Setter
+    public Long coord_y;
 
     @Column
-    String name;
+    @Getter
+    @Setter
+    public String name;
 
 
     @ManyToOne
-    Region sector;
+    @Getter
+    @Setter
+    public Region sector;
 
 
     @ManyToOne
-    Region subsector;
+    @Getter
+    @Setter
+    public Region subsector;
 
     @ManyToOne
-    Trade_Zone travel_zone;
+    @Getter
+    @Setter
+    public Travel_Zone travel_zone;
 
     @Column
-    boolean scout_base;
+    @Getter
+    @Setter
+    public boolean scout_base;
 
     @Column
-    boolean naval_base;
+    @Getter
+    @Setter
+    public boolean naval_base;
+
+
+    public Map<?, Planet> getPlanets(){
+        final EbeanServer ebeanServer = Ebean.getServer(null);
+
+        Map<?, Planet> returnValue = ebeanServer.find(Planet.class).where()
+                .eq("star_system_id",this.id ).setMapKey("orbit.stellar_orbit").findMap();
+        return returnValue;
+    }
 
 }

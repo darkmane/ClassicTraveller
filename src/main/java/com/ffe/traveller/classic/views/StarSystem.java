@@ -1,6 +1,7 @@
 package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ffe.traveller.classic.models.Star_System;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,23 @@ import java.util.*;
  */
 public class StarSystem {
 
+
+    public StarSystem(Star_System ss) {
+        this.zone = TravelZone.Green;
+        if (ss.getTravel_zone() == null) {
+            switch (ss.getTravel_zone().getName().toLowerCase()) {
+
+                case "yellow":
+                    this.zone = TravelZone.Amber;
+                    break;
+                case "red":
+                    this.zone = TravelZone.Red;
+                    break;
+
+            }
+        }
+
+    }
 
     public enum Zone {
         UNAVAILABLE, INNER, HABITABLE, OUTER
@@ -32,11 +50,8 @@ public class StarSystem {
     private HashMap<Star.StarPosition, Star> stars;
 
 
-
     @Getter
     HashMap<Integer, Planet> orbits;
-
-
 
 
     private static Map<String, Object> orbitalDistanceMap = new HashMap<>();
