@@ -48,3 +48,5 @@ CREATE TABLE `xboat_routes` (
   `end_system` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+GRANT ALL ON traveller.* TO 'traveller'@'%';

@@ -1,22 +1,30 @@
 travellerApp:
-  image: tomcat:8.0-jre8
+  image: darkmane/classictraveller
   links:
-    - travellerDb:db.darkmane.me
-travellerDb:
-  image: mysql
+    - travellerdb:db.darkmane.me
+travellerdb:
+  image: mysql:5.7
   environment:
     - MYSQL_ROOT_PASSWORD=traveller_root
     - MYSQL_USER=traveller
     - MYSQL_PASSWORD=traveller
   ports:
-    - "3306:3306"
+    - "33060:3306"
+    - "3306"
 travellerdebug:
-  build: .
-  dockerfile: Dockerfile-debug
+  image: darkmane/classictraveller
   ports:
     - "8080:8080"
     - "8000:8000"
   volumes:
     - ./target:/code
   links:
-    - travellerDb:db.darkmane.me
+    - travellerdb:db.darkmane.me
+dbdebug:
+  image: mysql:5.7
+  environment:
+    - MYSQL_ROOT_PASSWORD=traveller_root
+    - MYSQL_USER=traveller
+    - MYSQL_PASSWORD=traveller
+  links:
+    - travellerdb:db.darkmane.me

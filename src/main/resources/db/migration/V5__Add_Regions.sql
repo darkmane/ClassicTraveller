@@ -47,3 +47,5 @@ INSERT `regions` (`coord_x`, `coord_y`, `name`, `horizontal_size`, `vertical_siz
   (-13, 137, 'Aldebaran', 32, 32),
   (-45, 137, 'Neworld', 32, 32),
   (-77, 137, 'Langere', 32, 32);
+
+GRANT ALL ON traveller.* TO 'traveller'@'%';

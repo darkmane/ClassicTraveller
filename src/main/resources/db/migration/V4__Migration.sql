@@ -6,3 +6,4 @@ ALTER TABLE `orbits`
 MODIFY COLUMN `planetary_orbit` bigint NULL,
 MODIFY COLUMN `id` bigint;
 
+GRANT ALL ON traveller.* TO 'traveller'@'%';

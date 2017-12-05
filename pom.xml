@@ -19,7 +19,7 @@
         <testng.version>6.8.8</testng.version>
         <snake.yaml.version>1.15-SNAPSHOT</snake.yaml.version>
         <ebean.version>2.8.1</ebean.version>
-        <mysql.connector.version>5.1.37</mysql.connector.version>
+        <mysql.connector.version>6.0.6</mysql.connector.version>
         <ebean.orm.version>6.15.2</ebean.orm.version>
 
 
@@ -145,7 +145,7 @@
                     <artifactId>flyway-maven-plugin</artifactId>
                     <version>3.2.1</version>
                     <configuration>
-                        <url>jdbc:mysql://192.168.99.100/traveller</url>
+                        <url>jdbc:mysql://localhost:33060/traveller?useSSL=false</url>
                         <user>root</user>
                         <password>traveller_root</password>
                     </configuration>
@@ -180,8 +180,8 @@
     </build>
     <repositories>
         <repository>
-            <id>Codehaus Snapshots</id>
-            <url>http://repository.codehaus.org/</url>
+            <id>Maven Repository</id>
+            <url>https://mvnrepository.com</url>
         </repository>
         <repository>
             <id>Sonatype-snapshot</id>

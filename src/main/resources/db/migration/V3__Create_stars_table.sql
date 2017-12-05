@@ -24,3 +24,5 @@ ADD COLUMN `orbit_id` bigint,
 DROP COLUMN `orbit`,
 DROP COLUMN `satellite_orbit`;
 
+GRANT ALL ON traveller.* TO 'traveller'@'%';
+
