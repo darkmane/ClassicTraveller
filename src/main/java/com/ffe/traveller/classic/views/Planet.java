@@ -1,13 +1,15 @@
 package com.ffe.traveller.classic.views;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers;
+import com.ffe.traveller.classic.isUniversalPlanetaryProfile;
+import com.ffe.traveller.classic.models.IBody;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Null;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * @author markknights
@@ -50,7 +52,7 @@ public class Planet {
 
     @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PROTECTED)
-    protected UniversalPlanetaryProfile profile;
+    protected isUniversalPlanetaryProfile profile;
 
     @Setter(AccessLevel.PROTECTED)
     protected Boolean navalBase;
@@ -58,181 +60,12 @@ public class Planet {
     @Setter(AccessLevel.PROTECTED)
     protected Boolean scoutBase;
 
-    public Boolean getNavalBase(){
-        return (navalBase == null)? false: navalBase;
-    }
-
-    public Boolean getScoutBase(){
-
-        return (scoutBase == null)? false: scoutBase;
-
-    }
-
-    protected double getMinimumGreenhouse() {
-        double minG = 1.0;
-        switch (profile.getAtmosphere()) {
-            case 4:
-            case 5:
-                minG = 1.05;
-                break;
-            case 6:
-            case 7:
-            case 14:
-                minG = 1.1;
-                break;
-            case 8:
-            case 9:
-            case 13:
-                minG = 1.15;
-                break;
-            case 10:
-                minG = 1.2;
-                break;
-            case 11:
-            case 12:
-                minG = 1.2;
-                break;
-        }
-        return minG;
-    }
-
-    protected double getMaximumGreenhouse() {
-        double maxG = 1.0;
-        switch (profile.getAtmosphere()) {
-            case 4:
-            case 5:
-                maxG = 1.05;
-                break;
-            case 6:
-            case 7:
-            case 14:
-                maxG = 1.1;
-                break;
-            case 8:
-            case 9:
-            case 13:
-                maxG = 1.15;
-                break;
-            case 10:
-                maxG = 1.7;
-                break;
-            case 11:
-            case 12:
-                maxG = 2.2;
-                break;
-        }
-        return maxG;
-    }
-
-    @JsonIgnore
-    public double getMaximumAlbedo() {
-        double percWater = profile.getHydro() / 10.0;
-        double percLand = 1 - percWater;
-        double percIce = percLand * 0.1;
-        percWater -= percIce / 2;
-        percLand -= percIce / 2;
-
-        if ((profile.getAtmosphere() == 0 || profile.getAtmosphere() == 1) && profile.getHydro() > 0) {
-            percWater = 0.0;
-            percIce = profile.getHydro() / 10.0;
-            percLand = 1 - percIce;
-        }
-
-        double cloudiness = calculateCloudiness();
-
-        double unobstructedLand = percLand * (1 - cloudiness);
-        double unobstructedWater = percWater * (1 - cloudiness);
-        double unobstructedIce = percIce * (1 - cloudiness);
-
-
-        return (cloudiness * maxCloud) + (unobstructedLand * maxLand) + (unobstructedWater * water) + (unobstructedIce * maxIce);
-
-    }
-
-    @JsonIgnore
-    public double getMinimumAlbedo() {
-        double percWater = profile.getHydro() / 10.0;
-        double percLand = 1 - percWater;
-        double percIce = percLand * 0.1;
-        percWater -= percIce / 2;
-        percLand -= percIce / 2;
-
-        if ((profile.getAtmosphere() == 0 || profile.getAtmosphere() == 1) && profile.getHydro() > 0) {
-            percWater = 0.0;
-            percIce = profile.getHydro() / 10.0;
-            percLand = 1 - percIce;
-        }
-
-        double cloudiness = calculateCloudiness();
-
-        double unobstructedLand = percLand * (1 - cloudiness);
-        double unobstructedWater = percWater * (1 - cloudiness);
-        double unobstructedIce = percIce * (1 - cloudiness);
-
-
-        return (cloudiness * minCloud) + (unobstructedLand * minLand) + (unobstructedWater * water) + (unobstructedIce * minIce);
-
-    }
-
-    private double calculateCloudiness() {
-        double cloudiness = 0.0;
-        switch (profile.getHydro()) {
-            case 2:
-                cloudiness = 0.1;
-                break;
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                cloudiness = 0.1 * (profile.getHydro() - 2);
-                break;
-            case 10:
-                cloudiness = 0.7;
-                break;
-        }
-
-        switch (profile.getAtmosphere()) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                if (cloudiness > 0.20) {
-                    cloudiness = 0.2;
-                }
-                break;
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-                cloudiness += 0.4;
-                break;
-            case 14:
-                cloudiness /= 2;
-                break;
-
-        }
-        return cloudiness;
-    }
-
-    public void createOrbits(int number) {
-        maxOrbits = 0;
-
-    }
-
-
-    public enum Type {
-        ROCKY_PLANET, PLANETOID_BELT, LARGE_GAS_GIANT, SMALL_GAS_GIANT
-    }
 
     /**
      * Produces an unnamed, unidentified planet
      */
     protected Planet() {
         name = "Unnamed";
-        profile = new UniversalPlanetaryProfile(Starport.C, 7, 7, 7, 7, 7, 7);
         hexLocation = -1;
     }
 
@@ -256,9 +89,6 @@ public class Planet {
             hexLocation = -1;
         }
 
-        profile = new UniversalPlanetaryProfile(Starport.C, 7, 7, 7, 7, 7, 7);
-
-
     }
 
     /**
@@ -269,7 +99,7 @@ public class Planet {
      * @param scout      Generates a fully formed planet.  Hex location is expected but if it is
      *                   not yet placed put a negative number into the hexLocale parameter
      */
-    protected Planet(@Null String planetName, @Null Integer hexLocale, UniversalPlanetaryProfile upp, Boolean naval, Boolean scout) {
+    protected Planet(@Null String planetName, @Null Integer hexLocale, isUniversalPlanetaryProfile upp, Boolean naval, Boolean scout) {
         name = planetName;
 
         if (hexLocale != null) {
@@ -299,11 +129,11 @@ public class Planet {
         return scienceName;
     }
 
-    public Type getPlanetType() {
+    public IBody.Type getPlanetType() {
         if (profile.getDiameter() == 0)
-            return Type.PLANETOID_BELT;
+            return IBody.Type.PLANETOID_BELT;
         else
-            return Type.ROCKY_PLANET;
+            return IBody.Type.ROCKY_PLANET;
     }
 
 }

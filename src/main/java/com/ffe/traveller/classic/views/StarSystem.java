@@ -1,7 +1,11 @@
 package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ffe.traveller.classic.PlanetMaker;
+import com.ffe.traveller.classic.isUniversalPlanetaryProfile;
+import com.ffe.traveller.classic.models.Star;
 import com.ffe.traveller.classic.models.Star_System;
+import com.ffe.traveller.classic.models.Planet;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,9 +37,7 @@ public class StarSystem {
 
     }
 
-    public enum Zone {
-        UNAVAILABLE, INNER, HABITABLE, OUTER
-    }
+
 
     @Getter
     @Setter(AccessLevel.PROTECTED)
@@ -61,12 +63,12 @@ public class StarSystem {
     private int maxOrbits;
 
 
-    public UniversalPlanetaryProfile getProfile() {
-        return mainWorld.getProfile();
-    }
+    public isUniversalPlanetaryProfile getProfile() { return mainWorld; }
 
     protected StarSystem() {
-        mainWorld = PlanetMaker.CreatePlanet(null, null, null, null, null, null, null, null, null, null, null, null, null);
+        mainWorld = PlanetMaker.CreatePlanet(null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null);
 
         stars = new HashMap<>();
 

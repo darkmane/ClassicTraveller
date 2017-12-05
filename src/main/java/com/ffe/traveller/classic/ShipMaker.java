@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.ffe.traveller.classic.views;
+package com.ffe.traveller.classic;
+
+import com.ffe.traveller.classic.views.Ship;
 
 /**
  * @author darkmane

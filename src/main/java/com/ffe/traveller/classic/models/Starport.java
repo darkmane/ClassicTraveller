@@ -1,4 +1,4 @@
-package com.ffe.traveller.classic.views;
+package com.ffe.traveller.classic.models;
 
 /**
  * @author markknights

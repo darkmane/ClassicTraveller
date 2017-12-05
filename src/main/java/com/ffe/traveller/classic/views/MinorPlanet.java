@@ -1,6 +1,8 @@
 package com.ffe.traveller.classic.views;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ffe.traveller.classic.models.Star_System.Zone;
+import com.ffe.traveller.classic.models.TradeClassifications;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +22,7 @@ public class MinorPlanet extends Planet {
     @Getter
     @Setter(AccessLevel.PROTECTED)
     @JsonIgnore
-    private StarSystem.Zone zone;
+    private Zone zone;
 
     @Getter
     @Setter(AccessLevel.PROTECTED)

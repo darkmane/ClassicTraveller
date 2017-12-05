@@ -1,4 +1,4 @@
-package com.ffe.traveller.classic.views;
+package com.ffe.traveller.classic.models;
 
 public enum TradeClassifications {
 	Agricultural("Agricultural System"),
@@ -18,3 +18,4 @@ public enum TradeClassifications {
     public String getValue() {return value;}
     private TradeClassifications(String value) {this.value = value;}
 }
+

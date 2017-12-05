@@ -1,11 +1,16 @@
-package com.ffe.traveller.classic.views;
+package com.ffe.traveller.classic.models;
 
+import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ffe.traveller.classic.models.Star_System.Zone;
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
+import lombok.Setter;
 import org.yaml.snakeyaml.Yaml;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.InputStream;
 import java.util.*;
 
@@ -13,7 +18,7 @@ import java.util.*;
  * Created by sechitwood on 2/9/15.
  */
 
-public class Star {
+public class  Star extends Model implements IBody {
 
     private static Map<String, Map<String, Double>> luminosityMap = new HashMap<>();
     private static final double K_temp = 374.025;
@@ -25,6 +30,11 @@ public class Star {
     private Set<Integer> innerOrbits;
     private Set<Integer> habitableOrbits;
     private Set<Integer> outerOrbits;
+
+    @Override
+    public Type getType() {
+        return Type.STAR;
+    }
 
     public enum StellarClass {
         B, A, M, K, G, F
@@ -42,14 +52,23 @@ public class Star {
     public static final Integer FAR_ORBIT = Integer.MAX_VALUE;
     public static final Integer CENTER = Integer.MIN_VALUE;
 
+
+    @Id
+    @Getter
+    @Setter
+    long id;
+
+    @Column
     @Getter
     @JsonProperty("class")
     private StellarClass stellarClass;
 
+    @Column
     @Getter
     @JsonProperty("size")
     private StellarSize starSize;
 
+    @Column
     @Getter
     @JsonIgnore
     Integer starOrbit;
@@ -139,7 +158,7 @@ public class Star {
         return s;
     }
 
-    private Set<Integer> getOrbits(StarSystem.Zone z) {
+    private Set<Integer> getOrbits(Zone z) {
         if (unavailableOrbits == null) {
             determineOrbits();
         }
@@ -155,29 +174,29 @@ public class Star {
     }
 
     public Set<Integer> getInnerOrbits() {
-        return getOrbits(StarSystem.Zone.INNER);
+        return getOrbits(Zone.INNER);
     }
 
     public Set<Integer> getHabitableOrbits() {
-        return getOrbits(StarSystem.Zone.HABITABLE);
+        return getOrbits(Zone.HABITABLE);
     }
 
     public Set<Integer> getOuterOrbits() {
-        return getOrbits(StarSystem.Zone.OUTER);
+        return getOrbits(Zone.OUTER);
     }
 
-    public StarSystem.Zone getZone(Integer i){
-        StarSystem.Zone z = StarSystem.Zone.UNAVAILABLE;
+    public Zone getZone(Integer i){
+        Zone z = Zone.UNAVAILABLE;
         if(getInnerOrbits().contains(i)){
-            z = StarSystem.Zone.INNER;
+            z = Zone.INNER;
         }
 
         if(getHabitableOrbits().contains(i)){
-            z = StarSystem.Zone.HABITABLE;
+            z = Zone.HABITABLE;
         }
 
         if(getOuterOrbits().contains(i)){
-            z = StarSystem.Zone.OUTER;
+            z = Zone.OUTER;
         }
 
         return z;

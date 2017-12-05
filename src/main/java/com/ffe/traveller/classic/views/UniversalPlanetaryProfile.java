@@ -5,19 +5,19 @@
  */
 package com.ffe.traveller.classic.views;
 
-import java.io.*;
+import com.ffe.traveller.classic.models.Starport;
+import com.ffe.traveller.classic.models.TradeClassifications;
+import com.ffe.traveller.util.DiceGenerator;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-
-import com.ffe.traveller.util.DiceGenerator;
-import org.yaml.snakeyaml.Yaml;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.AccessLevel;
 
 public class UniversalPlanetaryProfile {
 

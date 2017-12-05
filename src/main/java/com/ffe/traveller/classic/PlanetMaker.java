@@ -1,15 +1,14 @@
-package com.ffe.traveller.classic.views;
+package com.ffe.traveller.classic;
 
+
+import com.ffe.traveller.classic.models.*;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.validation.constraints.Null;
-
 import java.io.InputStream;
 import java.util.*;
 
-import org.yaml.snakeyaml.Yaml;
-
 import static com.ffe.traveller.util.DiceGenerator.*;
-import static com.ffe.traveller.util.DiceGenerator.rollDiceWithModifier;
 
 
 /**
@@ -36,29 +35,36 @@ public class PlanetMaker {
      *                         not yet placed put a negative number into the hexLocale parameter
      */
     public static Planet CreatePlanet(@Null Random rng, @Null String planetName, @Null Integer hexLocale, @Null Starport starportType,
-                                      @Null Integer planetSize, @Null Integer planetAtmosphere, @Null Integer hydroPercent,
-                                      @Null Integer population, @Null Integer planetGovernment, @Null Integer law,
-                                      @Null Integer techLevel, @Null Boolean navalBase, @Null Boolean scoutBase) {
+                                      @Null Byte planetSize, @Null Byte planetAtmosphere, @Null Byte hydroPercent,
+                                      @Null Byte population, @Null Byte planetGovernment, @Null Byte law,
+                                      @Null Byte techLevel, @Null Boolean navalBase, @Null Boolean scoutBase) {
 
+        Planet p = new Planet();
+        p.setStarport(starportType);
+        p.setDiameter(planetSize);
+        p.setAtmosphere(planetAtmosphere);
+        p.setHydro(hydroPercent);
+        p.setPopulation(population);
+        p.setGovernment(planetGovernment);
+        p.setLaw_level(law);
+        p.setTech_level(techLevel);
 
-        UniversalPlanetaryProfile upp = UniversalPlanetaryProfileMaker.CreateUniversalPlanetaryProfile(starportType,
-                planetSize, planetAtmosphere, hydroPercent, population, planetGovernment, law);
-
-        if(navalBase == null) {
-            if ((upp.getStarport() == Starport.A || upp.getStarport() == Starport.B)
+        if (navalBase == null) {
+            if ((p.getStarport() == Starport.A || p.getStarport() == Starport.B)
                     && rollDice(1) % 2 == 0) {
                 navalBase = true;
             }
         }
-        if(scoutBase == null) {
-            if ((upp.getStarport() == Starport.A || upp.getStarport() == Starport.B
-                    || upp.getStarport() == Starport.C || upp.getStarport() == Starport.D)
+        if (scoutBase == null) {
+            if ((p.getStarport() == Starport.A || p.getStarport() == Starport.B
+                    || p.getStarport() == Starport.C || p.getStarport() == Starport.D)
                     && rollDice(1) % 2 == 0) {
                 scoutBase = true;
             }
         }
 
-        return new Planet(planetName, hexLocale, upp, navalBase, scoutBase);
+
+        return p;
 
     }
 
@@ -68,27 +74,37 @@ public class PlanetMaker {
      * @param mainPlanet
      * @return
      */
-    public static Planet CreateGasGiant(Random rng, StarSystem.Zone zone, Planet mainPlanet) {
-        Planet gg = null;
-        int numberOfMoons;
+    public static GasGiant CreateGasGiant(Random rng, Star_System.Zone zone, Planet mainPlanet) {
+        GasGiant gg = new GasGiant();
+
         if (roll(rng) % 2 == 0) {
-            gg = new GasGiant(null, null, Planet.Type.SMALL_GAS_GIANT);
+            gg.setType(IBody.Type.SMALL_GAS_GIANT);
+
+        } else {
+            gg.setType(IBody.Type.LARGE_GAS_GIANT);
+
+        }
+        return gg;
+    }
+
+    public static Collection<Planet> CreateGasGiantSatellites(Random rng, Star_System.Zone zone,
+                                                              Planet mainPlanet, Planet gg) {
+
+        int numberOfMoons;
+        Map<Integer, Planet> moons = new HashMap<>();
+        if (gg.getType() == IBody.Type.SMALL_GAS_GIANT) {
             numberOfMoons = rollDiceWithModifier(rng, 2, -4);
         } else {
-            gg = new GasGiant(null, null, Planet.Type.LARGE_GAS_GIANT);
             numberOfMoons = rollDice(rng, 2);
         }
-        Map<Integer, Planet> moons = new HashMap<>();
 
         for (int counter = 0; counter < numberOfMoons; counter++) {
             Planet moon = CreateSatellite(rng, zone, mainPlanet, gg);
-            int orbit = lookUpOrbit(rng, (moon.getProfile().getDiameter() ==0));
+            int orbit = lookUpOrbit(rng, (moon.getDiameter() == 0));
             moons.put(orbit, moon);
-
         }
 
-        gg.setSatellites(moons);
-        return gg;
+        return moons.values();
     }
 
 
@@ -100,9 +116,10 @@ public class PlanetMaker {
      * @param mainPlanet
      * @return
      */
-    public static Planet CreateMinorPlanet(Random rng, Star star, Integer orbit, StarSystem.Zone zone, Planet mainPlanet) {
+    public static Planet CreateMinorPlanet(Random rng, Star star, Integer orbit,
+                                           Star_System.Zone zone, Planet mainPlanet) {
         Starport port = null;
-        MinorPlanet s = new MinorPlanet();
+        Planet s = new Planet();
         int size = rollDiceWithModifier(rng, 2, -2);
 
         if (orbit <= 2) {
@@ -117,7 +134,7 @@ public class PlanetMaker {
         int hydro = rollDiceWithModifier(rng, 2, -7) + size;
         int pop = rollDiceWithModifier(rng, 2, -2);
         int gov = rollDiceWithModifier(rng, 1, 0);
-        int law = rollDiceWithModifier(rng, 1, -3) + mainPlanet.getProfile().getLaw_level();
+        int law = rollDiceWithModifier(rng, 1, -3) + mainPlanet.getLawLevel();
         switch (zone) {
             case INNER:
                 atmo -= 2;
@@ -155,9 +172,9 @@ public class PlanetMaker {
         if (pop < 0) {
             pop = 0;
         }
-        if (mainPlanet.getProfile().getGovernment() == 6) {
+        if (mainPlanet.getGovernment() == 6) {
             gov += pop;
-        } else if (mainPlanet.getProfile().getGovernment() >= 7) {
+        } else if (mainPlanet.getGovernment() >= 7) {
             gov += 1;
         }
 
@@ -201,30 +218,35 @@ public class PlanetMaker {
             hydro = 0;
         }
 
-        UniversalPlanetaryProfile upp = UniversalPlanetaryProfileMaker.CreateUniversalPlanetaryProfile(
-                port, size, atmo, hydro, pop, gov, law
-        );
-        s.setProfile(upp);
-        s.setTradeClassifications(calculateTradeFacilities(rng, upp, mainPlanet, zone));
+        s.setStarport(port);
+        s.setDiameter((byte) size);
+        s.setAtmosphere((byte) atmo);
+        s.setHydro((byte) hydro);
+        s.setPopulation((byte) pop);
+        s.setGovernment((byte) gov);
+        s.setLaw_level((byte) law);
 
-        int techLevel = mainPlanet.getProfile().getTechnological_level() - 1;
+        s.setTradeClassifications(calculateTradeFacilities(rng, s, mainPlanet, zone));
+
+        int techLevel = mainPlanet.getTechnologicalLevel() - 1;
+
         if (s.getTradeClassifications().contains(TradeClassifications.Military)) {
-            techLevel = mainPlanet.getProfile().getTechnological_level();
+            techLevel = mainPlanet.getTechnologicalLevel();
         }
-        int mainWorldAtmosphere = mainPlanet.getProfile().getAtmosphere();
+        int mainWorldAtmosphere = mainPlanet.getAtmosphere();
         if (techLevel < 7 && !(mainWorldAtmosphere == 5 || mainWorldAtmosphere == 6 || mainWorldAtmosphere == 8)) {
             techLevel = 7;
         }
-        s.getProfile().setTechnological_level(techLevel);
+        s.setTech_level((byte)techLevel);
 
         int numberOfMoons = rollDiceWithModifier(rng, 1, -3);
         Map<Integer, Planet> moons = new HashMap<>();
         for (int counter = 0; counter < numberOfMoons; counter++) {
             Planet moon = CreateSatellite(rng, zone, mainPlanet, s);
-            int o = lookUpOrbit(rng, (moon.getProfile().getDiameter() ==0));
+            int o = lookUpOrbit(rng, (moon.getDiameter() == 0));
             moons.put(o, moon);
         }
-        s.setSatellites(moons);
+
         return s;
     }
 
@@ -235,19 +257,19 @@ public class PlanetMaker {
      * @param parentPlanet
      * @return
      */
-    public static Planet CreateSatellite(Random rng, StarSystem.Zone zone, Planet mainPlanet, Planet parentPlanet) {
+    public static Planet CreateSatellite(Random rng, Star_System.Zone zone, Planet mainPlanet, Planet parentPlanet) {
         Starport port = null;
-        MinorPlanet s = new MinorPlanet();
-        int size = parentPlanet.getProfile().getDiameter() - rollDice(rng, 1);
+        Planet s = new Planet();
+        int size = parentPlanet.getDiameter() - rollDice(rng, 1);
         int atmo = rollDiceWithModifier(rng, 2, -7) + size;
         int hydro = rollDiceWithModifier(rng, 2, -7) + size;
         int pop = rollDiceWithModifier(rng, 2, -2);
         int gov = rollDiceWithModifier(rng, 1, 0);
-        int law = rollDiceWithModifier(rng, 1, -3) + mainPlanet.getProfile().getLaw_level();
+        int law = rollDiceWithModifier(rng, 1, -3) + mainPlanet.getLawLevel();
 
-        if (parentPlanet.getPlanetType() == Planet.Type.SMALL_GAS_GIANT) {
+        if (parentPlanet.getType() == Planet.Type.SMALL_GAS_GIANT) {
             size = rollDiceWithModifier(rng, 2, -6);
-        } else if (parentPlanet.getPlanetType() == Planet.Type.LARGE_GAS_GIANT) {
+        } else if (parentPlanet.getType() == Planet.Type.LARGE_GAS_GIANT) {
             size = rollDiceWithModifier(rng, 2, -4);
         }
 
@@ -286,9 +308,9 @@ public class PlanetMaker {
         if (pop < 0) {
             pop = 0;
         }
-        if (mainPlanet.getProfile().getGovernment() == 6) {
+        if (mainPlanet.getGovernment() == 6) {
             gov += pop;
-        } else if (mainPlanet.getProfile().getGovernment() >= 7) {
+        } else if (mainPlanet.getGovernment() >= 7) {
             gov += 1;
         }
 
@@ -332,21 +354,28 @@ public class PlanetMaker {
             hydro = 0;
         }
 
-        UniversalPlanetaryProfile upp = UniversalPlanetaryProfileMaker.CreateUniversalPlanetaryProfile(
-                port, size, atmo, hydro, pop, gov, law
-        );
-        s.setProfile(upp);
-        s.setTradeClassifications(calculateTradeFacilities(rng, upp, mainPlanet, zone));
+        s.setStarport(port);
+        s.setDiameter((byte)size);
+        s.setAtmosphere((byte)atmo);
+        s.setHydro((byte)hydro);
+        s.setPopulation((byte)pop);
+        s.setGovernment((byte)gov);
+        s.setLaw_level((byte)law);
 
-        int techLevel = mainPlanet.getProfile().getTechnological_level() - 1;
+
+
+        s.setTradeClassifications(calculateTradeFacilities(rng, s, mainPlanet, zone));
+
+        int techLevel = mainPlanet.getTechnologicalLevel() - 1;
         if (s.getTradeClassifications().contains(TradeClassifications.Military)) {
-            techLevel = mainPlanet.getProfile().getTechnological_level();
+            techLevel = mainPlanet.getTechnologicalLevel();
         }
-        int mainWorldAtmosphere = mainPlanet.getProfile().getAtmosphere();
+        int mainWorldAtmosphere = mainPlanet.getAtmosphere();
         if (techLevel < 7 && !(mainWorldAtmosphere == 5 || mainWorldAtmosphere == 6 || mainWorldAtmosphere == 8)) {
             techLevel = 7;
         }
-        s.getProfile().setTechnological_level(techLevel);
+
+        s.setTech_level((byte)techLevel);
         return s;
     }
 
@@ -357,24 +386,26 @@ public class PlanetMaker {
      * @param zone
      * @return
      */
-    private static Set<TradeClassifications> calculateTradeFacilities(Random rng, UniversalPlanetaryProfile profile, Planet mainWorld, StarSystem.Zone zone) {
+    private static Set<TradeClassifications> calculateTradeFacilities(Random rng, Planet profile,
+                                                                      Planet mainWorld, Star_System.Zone zone) {
         // Agricultural
 
         int atmosphere = profile.getAtmosphere();
         int hydro = profile.getHydro();
         int population = profile.getPopulation();
         int planGov = profile.getGovernment();
+        Set<TradeClassifications> mainWorldClassifications = mainWorld.getTradeClassifications();
 
         Set<TradeClassifications> tradeClassifications = new HashSet<>();
 
         // Farming
         if ((atmosphere > 3 && atmosphere < 10) && (hydro > 3 && hydro < 9)
-                && population > 2 && zone == StarSystem.Zone.HABITABLE) {
+                && population > 2 && zone == Star_System.Zone.HABITABLE) {
             tradeClassifications.add(TradeClassifications.Farming);
         }
 
         // Mining
-        if (mainWorld.getProfile().getTradeClassifications().contains(TradeClassifications.Industrial) &&
+        if (mainWorldClassifications.contains(TradeClassifications.Industrial) &&
                 population > 2) {
             tradeClassifications.add(TradeClassifications.Mining);
         }
@@ -392,21 +423,20 @@ public class PlanetMaker {
             tradeClassifications.add(TradeClassifications.Poor);
         }
 
-        int mod = mainWorld.getProfile().getTechnological_level() >= 10 ? 2 : 0;
+        int mod = mainWorld.getTechnologicalLevel() >= 10 ? 2 : 0;
 
         if (rollDiceWithModifier(rng, 2, mod) >= 10) {
-            if (mainWorld.getProfile().getTechnological_level() >= 8 && population > 0) {
+            if (mainWorld.getTechnologicalLevel() >= 8 && population > 0) {
                 tradeClassifications.add(TradeClassifications.Research);
             }
         }
 
-        if (mainWorld.getProfile().getPopulation() >= 8) {
+        mod = 0;
+        if (mainWorld.getPopulation() >= 8) {
             mod = 1;
-        } else {
-            mod = 0;
         }
 
-        if (mainWorld.getProfile().getAtmosphere() == atmosphere) {
+        if (mainWorld.getAtmosphere() == atmosphere) {
             mod += 2;
         }
 
@@ -415,7 +445,7 @@ public class PlanetMaker {
         }
 
         if (rollDiceWithModifier(rng, 2, mod) > 12) {
-            if (population > 0 && !mainWorld.getProfile().getTradeClassifications().contains(TradeClassifications.Poor)) {
+            if (population > 0 && !mainWorldClassifications.contains(TradeClassifications.Poor)) {
                 tradeClassifications.add(TradeClassifications.Military);
             }
         }
@@ -424,9 +454,49 @@ public class PlanetMaker {
         return tradeClassifications;
     }
 
-    private static Integer lookUpOrbit(Random rng, boolean isRing){
+    /**
+     * @param rng
+     * @param profile
+     * @return
+     */
+    private static Set<TradeClassifications> calculateTradeClassifications(Random rng,
+                                                                           isUniversalPlanetaryProfile profile) {
+        int atmosphere = profile.getAtmosphere();
+        int hydro = profile.getHydro();
+        int population = profile.getPopulation();
+        int planGov = profile.getGovernment();
+        Set<TradeClassifications> tradeClassifications = new HashSet<>();
 
-        if(satelliteOrbits.isEmpty()){
+        if (atmosphere > 3 && atmosphere < 10 && hydro > 3 && hydro < 9 && population > 4 && population < 8) {
+            tradeClassifications.add(TradeClassifications.Agricultural);
+        } else if (atmosphere < 4 && hydro < 4 && population > 5) {
+            tradeClassifications.add(TradeClassifications.NonAgricultural);
+        }
+
+        if (population > 8 && (atmosphere == 0 ||
+                atmosphere == 1 ||
+                atmosphere == 2 ||
+                atmosphere == 4 ||
+                atmosphere == 7 ||
+                atmosphere == 9)) {
+            tradeClassifications.add(TradeClassifications.Industrial);
+        } else if (population < 7) {
+            tradeClassifications.add(TradeClassifications.NonIndustrial);
+        }
+        // Financial
+        if ((atmosphere == 6 || atmosphere == 8) && (population > 5 && population < 9)
+                && (planGov > 3 && planGov < 10)) {
+            tradeClassifications.add(TradeClassifications.Rich);
+        } else if ((atmosphere > 1 && atmosphere < 6) && hydro < 4) {
+            tradeClassifications.add(TradeClassifications.Poor);
+        }
+
+        return tradeClassifications;
+    }
+
+    private static Integer lookUpOrbit(Random rng, boolean isRing) {
+
+        if (satelliteOrbits.isEmpty()) {
             loadProperties();
         }
 
@@ -443,12 +513,12 @@ public class PlanetMaker {
 
         orbitRoll = rollDice(rng, 2);
 
-        if(isRing){
+        if (isRing) {
             orbits = satelliteOrbits.get("ring");
             orbitRoll = rollDice(rng, 1);
         }
 
-        return orbits.get(orbitRoll-1);
+        return orbits.get(orbitRoll - 1);
 
     }
 
